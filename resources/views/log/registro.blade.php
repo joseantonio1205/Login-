@@ -8,7 +8,7 @@
     <hr class="bg-success">
     <div class="mb-3">
         <label for="exampleInputText1" class="form-label">nombre de usuario</label>
-        <input type="text" class="form-control" id="name" name="name" aria-describedby="textHelp">
+        <input type="text" class="form-control" required autofocus id="name" name="name" aria-describedby="textHelp">
         <div id="textHelp" class="form-text"></div>
     </div>
 
@@ -16,8 +16,8 @@
         <label for="exampleInputEmail1" class="form-label">Email address</label>
         <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
         <div id="emailHelp" class="form-text"></div>
-    </div>
-
+    </div> 
+   
     <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp">

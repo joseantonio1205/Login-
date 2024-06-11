@@ -9,7 +9,7 @@
     <hr class="bg-success">
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+        <input type="email" class="form-control" required autofocus value="{{old('email')}}" id="email" name="email" aria-describedby="emailHelp">
         <div id="emailHelp" class="form-text"></div>
     </div>
 
