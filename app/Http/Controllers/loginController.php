@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Console\View\Components\Alert;
-use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\DB;
 
 class loginController extends Controller
 {
@@ -21,16 +19,14 @@ class loginController extends Controller
     {
         return view('.log.login');
     }
-    public function plantilla(){
-        return view('home.home');
-    }
 
-    public function reg_new(){
+    public function reg_new()
+    {
         return view('log.registro');
     }
 
     //public function hom(){
-      //  return view('.home.home');
+    //  return view('.home.home');
     //}
 
     /**
@@ -52,41 +48,43 @@ class loginController extends Controller
     public function store(Request $request)
     {
         $datos = new User();
+        //acojemos la variable para asi verificar si no hay un correo similar ya registrado
+        $mail = $request->email;
 
         $datos->name = $request->name;
         $datos->email = $request->email;
         $datos->password = Hash::make($request->password);
 
-        $datos->save();
-
-        Auth::login($datos);
-        return redirect(route('log_home'));
-
-
+        if (DB::table('users')->where('email', $mail)->exists()) {
+            return redirect(route('registro_new'))->with('error','rule');
+        } else {
+            $datos->save();
+            Auth::login($datos);
+            return redirect(route('log_home'));
+        }
     }
 
-    public function validar(Request $request){
+    public function validar(Request $request)
+    {
 
         $credenciales = [
-            "email"=>$request->email,
-            "password"=>$request->password,
-            //"active"=>true
+            "email" => $request->email,
+            "password" => $request->password,
         ];
 
         $remember = ($request->has('remember') ? true : false);
 
-        if(Auth::attempt($credenciales,$remember)){
+        if (Auth::attempt($credenciales, $remember)) {
             $request->session()->regenerate();
-
             return redirect()->intended(route('inicio'));
-        }else{
-            return redirect(route('log_home'));
-            
-           
+        } else {
+            //si se realiza el registro mal
+            return redirect(route('log_home'))->with('err','rule1');
         }
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

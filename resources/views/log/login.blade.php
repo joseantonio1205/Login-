@@ -9,7 +9,7 @@
     <hr class="bg-success">
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" required autofocus value="{{old('email')}}" id="email" name="email" aria-describedby="emailHelp">
+        <input type="email" class="form-control" required autofocus id="email" name="email" aria-describedby="emailHelp">
         <div id="emailHelp" class="form-text"></div>
     </div>
 
@@ -26,4 +26,11 @@
     <button type="submit" class="btn btn-outline-success">Aceptar</button>
 
 </form>
+@endsection
+
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('err'))
+    <script>Swal.fire("las credenciales son incorrectas, vuelva a intentarlo.");</script>
+    @endif
 @endsection
